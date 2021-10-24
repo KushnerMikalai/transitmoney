@@ -8,11 +8,10 @@
 }
 
 .main {
-  padding: 5rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-contwent: center;
   align-items: center;
 }
 
@@ -21,8 +20,16 @@
   padding: 15px 0;
   border-top: 1px solid #eaeaea;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.footerLinks {
+  display: flex;
+}
+
+.footerLinks a {
+  margin-left: 15px;
 }
 
 .footer a {
@@ -30,6 +37,7 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  color: #0070f3;
 }
 
 .title a {
@@ -65,7 +73,7 @@
   padding: 0.75rem;
   font-size: 1.1rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 .grid {
