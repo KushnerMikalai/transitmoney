@@ -5,17 +5,16 @@ import {getSession} from "next-auth/react"
 const handler: NextApiHandler = async (_, res) => {
   try {
     const session = await getSession({req: _})
-    const email = session?.user?.email || '';
 
     if (session) {
-      const results = await query(`SELECT * FROM users WHERE Email = "${email}" LIMIT 1`)
+      const results = await query('SELECT * FROM users')
 
       return res.json(results)
     } else {
       res.status(401).json('Access Denied')
     }
 
-  } catch (e) {
+  } catch (e: any) {
     res.status(500).json({message: e.message})
   }
 }

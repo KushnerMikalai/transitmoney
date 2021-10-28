@@ -7,7 +7,7 @@ import styles from '../styles/home.module.css'
 const fetcher = (input: RequestInfo, init: RequestInit, ...args: any[]) => fetch(input, init).then(res => res.json())
 
 function useUsers() {
-  const {data, error} = useSWR(`https://jsonplaceholder.typicode.com/users`, fetcher)
+  const {data, error} = useSWR('/api/users', fetcher)
 
   return {
     data,
@@ -40,9 +40,12 @@ const Home: NextPage = () => {
       </div>
       <Header/>
       <main className={styles.main}>
-        {users.isLoading ? <p>Loading Posts</p> :
-          <ul>
-            {users.data.map((post: any) => <li key={post.id}>{post.name}</li>)}
+        {users.isLoading ? <p>loading user data</p> :
+          users.data && <ul>
+            {users.data.map((user: any) => <li key={user.id}>
+              {user.image && <img className="ava" src={user.image} alt=""/>}
+              <span>{user.name || user.email}</span>
+            </li>)}
           </ul>
         }
       </main>
@@ -54,6 +57,20 @@ const Home: NextPage = () => {
              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">deploy</a>
         </div>
       </footer>
+
+      {}
+      {/*language=CSS*/}
+      <style jsx>{`
+        .ava {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          object-fit: contain;
+          margin-right: 10px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+      `}</style>
     </div>
   )
 }
