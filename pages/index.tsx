@@ -7,15 +7,15 @@ import {Box, useColorModeValue} from '@chakra-ui/react'
 
 const fetcher = (input: RequestInfo, init: RequestInit, ...args: any[]) => fetch(input, init).then(res => res.json())
 
-function useUsers() {
-  const {data, error} = useSWR('/api/users', fetcher)
+// function useUsers() {
+//   const {data, error} = useSWR('/api/users', fetcher)
 
-  return {
-    data,
-    isLoading: !error && !data,
-    isError: error
-  }
-}
+//   return {
+//     data,
+//     isLoading: !error && !data,
+//     isError: error
+//   }
+// }
 
 function useHello() {
   const {data, error} = useSWR('/api/hello', fetcher)
@@ -29,7 +29,7 @@ function useHello() {
 
 const Home: NextPage = () => {
   const {data, isLoading, isError} = useHello()
-  const users = useUsers()
+  // const users = useUsers()
   const bg = useColorModeValue('gray.50', 'inherit')
 
   return (
