@@ -30,10 +30,11 @@ function useHello() {
 const Home: NextPage = () => {
   const {data, isLoading, isError} = useHello()
   const users = useUsers()
+  const bg = useColorModeValue('gray.50', 'inherit')
 
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'inherit')}
+      bg={bg}
       minH="100vh"
     >
       <Head>

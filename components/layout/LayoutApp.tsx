@@ -8,6 +8,7 @@ type LayoutAppType<T = {}> = {
 
 const LayoutApp = ({children}: LayoutAppType): ReactElement => {
   const {data: session, status} = useSession()
+  const bg = useColorModeValue('gray.50', 'inherit')
 
   if (status === 'loading') {
     return <p>Loading...</p>
@@ -19,10 +20,8 @@ const LayoutApp = ({children}: LayoutAppType): ReactElement => {
 
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'inherit')}
+      bg={bg}
       minH="100vh"
-      py="12"
-      px={{ base: '2', lg: '8' }}
     >
       {children}
     </Box>
