@@ -1,20 +1,50 @@
 import {useSession, signOut, signIn} from 'next-auth/react'
 import Link from 'next/link'
-import {Button, useColorMode} from "@chakra-ui/react"
+import {
+  Button,
+  useColorMode,
+  HStack,
+  Box,
+  VisuallyHidden,
+  Container,
+} from "@chakra-ui/react"
+import {FaGoogle} from 'react-icons/fa'
+import {useState} from 'react'
 
 const Header = () => {
   const {data: session, status} = useSession()
   const {colorMode, toggleColorMode} = useColorMode()
+  const [isLoadingSignIn, setLoading] = useState(false);
+
+  const handleSignIn = () => {
+    setLoading(true)
+    signIn('google', {callbackUrl: `${window.location.origin}/dashboard`})
+  }
+
+  const Auth = () => {
+    return (
+      <HStack spacing="24px">
+        <Box>
+          <span className="mr-4 text-xs">{session?.user?.email}</span>
+        </Box>
+        <Box>
+          <Button onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>
+            Sign out
+          </Button>
+        </Box>
+      </HStack>
+    )
+  }
 
   return (
     <header className="hd">
-      <div className="hd-content">
+      <Container maxW="container.xl" centerContent>
         <Link href="/">
-          <a className="logo">Kush</a>
+          <a className="logo">Transitmoney</a>
         </Link>
         <nav className="hd-nav">
           <Button onClick={toggleColorMode}>
-            Toggle {colorMode === "light" ? "Dark" : "Light"}
+            toggle {colorMode === 'light' ? 'dark' : 'light'}
           </Button>
           {session && (<ul>
             <li>
@@ -32,27 +62,20 @@ const Header = () => {
             {status === 'unauthenticated' && !session && (
               <>
                 <Button
-                  onClick={() => signIn('google', {
-                    callbackUrl: `${window.location.origin}/dashboard`,
-                  })}
+                  isLoading={isLoadingSignIn}
+                  color="currentColor"
+                  variant="solid"
+                  onClick={handleSignIn}
+                  leftIcon={<FaGoogle />}
                 >
-                  <i className="sign-in__icon"
-                     style={{backgroundImage: `url(https://www.google.com/s2/favicons?sz=64&domain_url=google.com)`}}></i>
                   Sign in with Google
                 </Button>
               </>
             )}
-            {session && (
-              <>
-                <span className="mr-4 text-xs">{session.user.email}</span>
-                <Button onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>
-                  Sign out
-                </Button>
-              </>
-            )}
+            {session && (<Auth />)}
           </div>
         </nav>
-      </div>
+      </Container>
 
       {/*language=CSS*/}
       <style jsx>{`
@@ -81,17 +104,6 @@ const Header = () => {
 
         .hd-nav ul li {
           margin-left: 10px;
-        }
-
-        .hd-content {
-          display: flex;
-          align-items: center;
-          margin: 0 auto;
-          max-width: 980px;
-          padding: 0 22px;
-          height: 52px;
-          position: relative;
-          z-index: 2;
         }
 
         .auth {

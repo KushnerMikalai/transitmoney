@@ -1,5 +1,6 @@
 import {ReactElement} from 'react'
 import {useSession} from 'next-auth/react'
+import {Box, useColorModeValue} from '@chakra-ui/react'
 
 type LayoutAppType<T = {}> = {
   children?: React.ReactNode
@@ -16,7 +17,16 @@ const LayoutApp = ({children}: LayoutAppType): ReactElement => {
     return <p>Access Denied</p>
   }
 
-  return <>{children}</>
+  return (
+    <Box
+      bg={useColorModeValue('gray.50', 'inherit')}
+      minH="100vh"
+      py="12"
+      px={{ base: '2', lg: '8' }}
+    >
+      {children}
+    </Box>
+  )
 }
 
 export default LayoutApp

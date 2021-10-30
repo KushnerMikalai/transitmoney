@@ -3,6 +3,7 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import Header from '../components/layout/Header'
 import styles from '../styles/home.module.css'
+import {Box, useColorModeValue} from '@chakra-ui/react'
 
 const fetcher = (input: RequestInfo, init: RequestInit, ...args: any[]) => fetch(input, init).then(res => res.json())
 
@@ -31,7 +32,10 @@ const Home: NextPage = () => {
   const users = useUsers()
 
   return (
-    <div className={styles.container}>
+    <Box
+      bg={useColorModeValue('gray.50', 'inherit')}
+      minH="100vh"
+    >
       <Head>
         <meta name="description" content="kush app"/>
         <link rel="icon" href="/favicon.ico"/>
@@ -40,18 +44,18 @@ const Home: NextPage = () => {
       </div>
       <Header/>
       <main className={styles.main}>
-        {users.isLoading ? <p>loading user data</p> :
-          users.data && <ul>
+        {/* {users.isLoading ? <p>loading user data</p> :
+          users.data && Array.isArray(users.data) && <ul>
             {users.data.map((user: any) => <li key={user.id}>
               {user.image && <img className="ava" src={user.image} alt=""/>}
               <span>{user.name || user.email}</span>
             </li>)}
           </ul>
-        }
+        } */}
       </main>
 
       <footer className={styles.footer}>
-        <div>{data ? <a href={data.link} target="_blank" rel="noopener noreferrer">{data.name}</a> : 'Loading...'}</div>
+        {/* <div>{data ? <a href={data.link} target="_blank" rel="noopener noreferrer">{data.name}</a> : 'Loading...'}</div> */}
         <div className={styles.footerLinks}>
           <a className={styles.link}
              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">deploy</a>
@@ -71,7 +75,7 @@ const Home: NextPage = () => {
           overflow: hidden;
         }
       `}</style>
-    </div>
+    </Box>
   )
 }
 
