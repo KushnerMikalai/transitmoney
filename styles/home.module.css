@@ -11,6 +11,16 @@
   width: 100%;
 }
 
+.scrollDown {
+  position: absolute;
+  display: inline-block;
+  bottom: 10px;
+  left: 50%;
+  color: #fff;
+  transform: translateX(-50%);
+  border-radius: 50%;
+}
+
 .img {
   width: 100%;
 }
