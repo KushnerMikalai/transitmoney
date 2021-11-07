@@ -56,7 +56,7 @@ const LayoutApp = ({ children }: LayoutAppType): ReactElement => {
         onClose={toggleSidebar}
       />
       <Box
-        ml={!variants?.navigationButton && 260}
+        ml={!variants?.navigationButton ? 260 : 0}
         minH="100%"
         w="100%"
         bg="white"
@@ -68,6 +68,7 @@ const LayoutApp = ({ children }: LayoutAppType): ReactElement => {
           pb="5"
           bg="gray.50"
         >
+          {variants?.navigationButton && <button onClick={toggleSidebar}>toggle sidebar</button>}
           {children}
         </Box>
       </Box>
