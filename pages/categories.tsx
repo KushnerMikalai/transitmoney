@@ -3,7 +3,7 @@ import LayoutApp from '../components/layout/LayoutApp'
 export default function Dashboard() {
   return (
     <LayoutApp>
-      <h1>dashboard</h1>
+      <h1>categories</h1>
     </LayoutApp>
   )
 }

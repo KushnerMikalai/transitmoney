@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
+
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.next()
+  }
+
   const basicAuth = req.headers.get('authorization')
 
   if (basicAuth) {
@@ -18,5 +23,4 @@ export function middleware(req: NextRequest) {
       'WWW-Authenticate': 'Basic realm="Secure Area"',
     },
   })
-
 }
