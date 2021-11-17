@@ -13,7 +13,6 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { FaGoogle } from 'react-icons/fa'
-// import Logo from '../components/layout/Logo'
 
 // const fetcher = (input: RequestInfo, init: RequestInit, ...args: any[]) => fetch(input, init).then(res => res.json())
 
