@@ -59,14 +59,13 @@ const LayoutApp = ({ children }: LayoutAppType): ReactElement => {
         ml={!variants?.navigationButton ? 260 : 0}
         minH="100%"
         w="100%"
-        bg="white"
         transition="all .1s ease-in-out"
       >
         <Box
           minH="100%"
           px="5"
-          pb="5"
-          bg="gray.50"
+          backgroundImage="radial-gradient(#E2E8F0 2%, transparent 11%), radial-gradient(#E2E8F0 2%, transparent 11%)"
+          backgroundSize="20px 20px"
         >
           {variants?.navigationButton && <button onClick={toggleSidebar}>toggle sidebar</button>}
           {children}

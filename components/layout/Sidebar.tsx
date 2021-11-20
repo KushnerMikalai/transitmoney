@@ -38,17 +38,17 @@ interface PropsSidebarContent {
 
 const menuMap = [
   {
-    link: '/dashboard',
+    link: '/app/dashboard',
     name: 'Dashboard',
     icon: (<HiOutlineHome />)
   },
   {
-    link: '/expenses',
+    link: '/app/expenses',
     name: 'Expenses',
     icon: (<HiOutlineSortDescending />)
   },
   {
-    link: '/categories',
+    link: '/app/categories',
     name: 'Categories',
     icon: (<HiOutlineViewList />)
   }
@@ -125,9 +125,8 @@ const Sidebar = ({ isOpen, variant, onClose }: Props) => {
       w="260px"
       top="0"
       h="100%"
-      borderRight="1px"
-      borderColor="gray.200"
       transition="all .1s ease-in-out"
+      boxShadow="inner"
     >
       <Auth />
       <SidebarContent onClick={onClose} />
