@@ -24,7 +24,8 @@
     "react-icons": "^4.3.1",
     "serverless-mysql": "^1.5.4",
     "swr": "^1.0.1",
-    "typeorm": "^0.2.38"
+    "typeorm": "^0.2.38",
+    "zustand": "^3.6.5"
   },
   "devDependencies": {
     "@types/react": "17.0.31",
