@@ -59,8 +59,10 @@ const Auth = () => {
 
   return (
     <Box mb="10">
-      <Menu matchWidth={true}>
-        <MenuButton w="100%" size="lg" px="4" as={Button} rightIcon={<HiSelector />}>
+      <Menu id="navbar" isLazy matchWidth={true}>
+        <MenuButton
+          key="sss"
+          w="100%" size="lg" px="4" as={Button} rightIcon={<HiSelector />}>
           <HStack spacing="10px">
             <Avatar bg="brand.600" color="white" size="sm" name={session?.user?.email} />
             <Text

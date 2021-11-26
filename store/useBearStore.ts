@@ -1,6 +1,7 @@
-import create from "zustand";
-import { devtools } from "zustand/middleware";
-import { useBeesStore } from "./useBeesStore";
+import create from 'zustand'
+import { devtools } from 'zustand/middleware'
+import { useBeesStore } from './useBeesStore'
+
 type BearState = {
   bears: number;
   increasePopulation: () => void;
@@ -13,7 +14,6 @@ const useBearStore = create<BearState>(
       bears: 0,
       increasePopulation: () => {
         useBeesStore.setState({ bees: 23 });
-
         set((state) => ({ bears: state.bears + 1 }));
       },
       removeAllBears: () => set({ bears: 0 })

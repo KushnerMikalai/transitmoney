@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react'
-import { useSession } from 'next-auth/react'
 import {
   Box,
   Flex,
@@ -7,43 +6,44 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
+// import StartPlan from '../StartPlan/StartPlan'
 import Sidebar from './Sidebar'
 
 type LayoutAppType<T = {}> = {
   children?: React.ReactNode
+  isAuth: boolean | null
 }
 
 const smVariant = { navigation: 'drawer', navigationButton: true }
 const mdVariant = { navigation: 'sidebar', navigationButton: false }
 
-const LayoutApp = ({ children }: LayoutAppType): ReactElement => {
-  const { data: session, status } = useSession()
+const LayoutApp = ({ children, isAuth }: LayoutAppType): ReactElement => {
   const bg = useColorModeValue('gray.200', 'inherit')
 
   const [isSidebarOpen, setSidebarOpen] = useState(false)
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant })
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen)
 
-  if (status === 'loading') {
-    return <Box
-      w="100%"
-      minH="100vh"
-      d="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="brand.500"
-        size="xl"
-      />
-    </Box>
-  }
+  // if (isAuth === 'loading') {
+  //   return <Box
+  //     w="100%"
+  //     minH="100vh"
+  //     d="flex"
+  //     alignItems="center"
+  //     justifyContent="center"
+  //   >
+  //     <Spinner
+  //       thickness="4px"
+  //       speed="0.65s"
+  //       emptyColor="gray.200"
+  //       color="brand.500"
+  //       size="xl"
+  //     />
+  //   </Box>
+  // }
 
-  if (status === 'unauthenticated') {
-    return <p>access denied :(</p>
+  if (!isAuth) {
+    return <p>403 access denied</p>
   }
 
   return (

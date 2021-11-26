@@ -1,6 +1,7 @@
 import { useLayoutEffect } from 'react'
 import create, { SetState, GetState } from 'zustand'
 import createContext from 'zustand/context'
+import { devtools } from 'zustand/middleware'
 
 let store: any
 
@@ -20,7 +21,7 @@ export const Provider = zustandContext.Provider
 export const useStore = zustandContext.useStore
 
 export const initializeStore = (preloadedState = {}) => {
-  return create((set: SetState<State>, get: GetState<State>) => ({
+  return create(devtools((set: SetState<State>, get: GetState<State>) => ({
     ...initialState,
     ...preloadedState,
     tick: (lastUpdate: number, light: boolean) => {
@@ -44,7 +45,7 @@ export const initializeStore = (preloadedState = {}) => {
         count: initialState.count,
       })
     },
-  }))
+  })))
 }
 
 export function useCreateStore(initialState: {lastUpdate: number, light: boolean, count: number}) {
