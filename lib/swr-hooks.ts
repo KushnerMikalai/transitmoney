@@ -1,7 +1,18 @@
 import useSWR from 'swr'
 
-function fetcher(url: string) {
-  return window.fetch(url).then((res) => res.json())
+// function fetcher(url: string) {
+//   return window.fetch(url).then((res) => res.json())
+// }
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+export function useEntrypoint() {
+  const {data, error} = useSWR('/api/entrypoint', fetcher)
+
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  }
 }
 
 // TODO api services
