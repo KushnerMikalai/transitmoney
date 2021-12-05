@@ -7,7 +7,7 @@ import {
   // useColorModeValue,
 } from '@chakra-ui/react'
 // import { useSession, getSession } from 'next-auth/react'
-// import StartPlan from '../StartPlan/StartPlan'
+import StartPlan from '../StartPlan/StartPlan'
 // import Sidebar from './Sidebar'
 import {useEntrypoint} from '../../lib/swr-hooks'
 
@@ -69,6 +69,7 @@ const LayoutApp = ({ children }: LayoutAppType): ReactElement => {
           backgroundImage="radial-gradient(#E2E8F0 2%, transparent 11%), radial-gradient(#E2E8F0 2%, transparent 11%)"
           backgroundSize="20px 20px"
         >
+          {Array.isArray(data?.budgets) && !data.budgets.length && <StartPlan/>}
           {/* {variants?.navigationButton && <button onClick={toggleSidebar}>toggle sidebar</button>} */}
           {children}
         </Box>

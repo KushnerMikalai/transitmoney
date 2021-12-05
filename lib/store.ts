@@ -5,12 +5,16 @@ import { devtools } from 'zustand/middleware'
 
 let store: any
 
-type State = {lastUpdate: number, light: boolean, count: number}
+type State = {
+  // lastUpdate: number,
+  // light: boolean,
+  // count: number,
+}
 
 const initialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0,
+  // lastUpdate: 0,
+  // light: false,
+  // count: 0,
 }
 
 const zustandContext = createContext()
@@ -24,27 +28,27 @@ export const initializeStore = (preloadedState = {}) => {
   return create(devtools((set: SetState<State>, get: GetState<State>) => ({
     ...initialState,
     ...preloadedState,
-    tick: (lastUpdate: number, light: boolean) => {
-      set({
-        lastUpdate,
-        light: !!light,
-      })
-    },
-    increment: () => {
-      set({
-        count: get().count + 1,
-      })
-    },
-    decrement: () => {
-      set({
-        count: get().count - 1,
-      })
-    },
-    reset: () => {
-      set({
-        count: initialState.count,
-      })
-    },
+    // tick: (lastUpdate: number, light: boolean) => {
+    //   set({
+    //     lastUpdate,
+    //     light: !!light,
+    //   })
+    // },
+    // increment: () => {
+    //   set({
+    //     count: get().count + 1,
+    //   })
+    // },
+    // decrement: () => {
+    //   set({
+    //     count: get().count - 1,
+    //   })
+    // },
+    // reset: () => {
+    //   set({
+    //     count: initialState.count,
+    //   })
+    // },
   })))
 }
 

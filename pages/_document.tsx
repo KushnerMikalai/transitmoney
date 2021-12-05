@@ -5,7 +5,8 @@ import theme from '../theme'
 export default class Document extends NextDocument {
   render() {
     return (
-      <Html lang="en">
+      // change lang
+      <Html>
         <Head/>
         <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode}/>

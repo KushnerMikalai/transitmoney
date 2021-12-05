@@ -15,6 +15,27 @@ export function useEntrypoint() {
   }
 }
 
+export function useCountries() {
+  const {data, error} = useSWR('/api/countries', fetcher)
+
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export function useCurrencies() {
+  const {data, error} = useSWR('/api/currencies', fetcher)
+
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+
 // TODO api services
 // export function useEntries() {
 //   const {data, error} = useSWR(`/api/get-entries`, fetcher)

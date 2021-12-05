@@ -8,13 +8,17 @@ const handler: NextApiHandler = async (_, res) => {
 
     if (session) {
       const db = (await clientPromise).db('dev_1')
-      const user = await db.collection('users').findOne({ email: session.user.email })
-      const budgets = await db.collection('budgets').find({ userId: user._id }).toArray()
+      const countries = await db.collection('countries')
+        .find({cioc: { $in: ['BLR', 'RUS', 'UKR', 'POL']} })
+        .project({
+          cioc: 1,
+          name: 1,
+          flag: 1,
+          currencies: 1,
+        })
+        .toArray()
 
-      return res.json({
-        user,
-        budgets
-      })
+      return res.json(countries)
     } else {
       res.status(401).json('Access Denied')
     }

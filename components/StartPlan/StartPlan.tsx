@@ -1,79 +1,152 @@
 import { useState, ReactElement } from 'react'
 import {
+  Box,
   Button,
   Flex,
   Text,
   VStack,
+  HStack,
   Input,
   FormControl,
   FormLabel,
+  Select,
   FormHelperText,
 } from '@chakra-ui/react'
-
-interface StepsListProps {
-  onCreate: (form: any) => void
-}
-
-const StepsList = ({ onCreate }: StepsListProps) => {
-  const [step, setStep] = useState(1);
-
-  const onChangeStep = (step: number) => {
-    setStep(step)
-  }
-
-  return (<div>
-      {step === 1 &&
-        <VStack>
-          <Text>Start planning your budget</Text>
-          <Button onClick={() => onChangeStep(2)}>Start</Button>
-        </VStack>
-      }
-      {step === 2 &&
-        <VStack>
-          <Text>Your budget settings:</Text>
-          <FormControl id="email">
-            <FormLabel>Name budget:</FormLabel>
-            <Input type="text" />
-            <FormHelperText>We`ll never share your email.</FormHelperText>
-          </FormControl>
-          <Button onClick={() => onChangeStep(3)}>Next</Button>
-        </VStack>
-      }
-      {step === 3 &&
-        <VStack>
-          <Text>Start planning your budget</Text>
-          <FormControl id="email">
-          </FormControl>
-          <Button onClick={() => onChangeStep(2)}>Back</Button>
-          <Button onClick={() => onCreate({step})}>Finish</Button>
-        </VStack>
-      }
-  </div>)
-}
+import HeaderLite from '../layout/HeaderLite'
+import {useCountries, useCurrencies} from '../../lib/swr-hooks'
 
 const StartPlan = () => {
-  const onCreate = (form: any) => {
-    console.log(form, 'onCreate');
+  const countries = useCountries()
+  const currencies = useCurrencies()
+
+  const [categoryValues, setCategoryValues] = useState([
+    { category: '', sum : ''},
+    { category: '', sum : ''},
+  ])
+
+  let handleChange = (i: number, e: any) => {
+    let newFormValues: any = [...categoryValues];
+    newFormValues[i][e.target.name] = e.target.value;
+    setCategoryValues(newFormValues);
   }
 
+  let addFormFields = () => {
+    setCategoryValues([...categoryValues, { category: '', sum: '' }])
+  }
+
+  let removeFormFields = (i: number) => {
+    let newFormValues = [...categoryValues];
+    newFormValues.splice(i, 1);
+    setCategoryValues(newFormValues)
+  }
+
+
+  let handleSubmit = (event: any) => {
+    event.preventDefault();
+    alert(JSON.stringify(categoryValues));
+  }
+
+  const minDate = new Date()
+  minDate.setMonth(minDate.getMonth() - 1)
+  const minStringDate = minDate.toISOString().split('T')[0]
+
+  const maxDate = new Date()
+  maxDate.setMonth(maxDate.getMonth() + 6)
+  const maxStringDate = maxDate.toISOString().split('T')[0]
+
   return (
-    <Flex justify="center" minHeight="100vh" align="center">
-      <Flex
-        minH="300px"
-        maxW="600px"
+    <Box
+      position="fixed"
+      top="0"
+      bottom="0"
+      left="0"
+      overflowX="hidden"
+      overflowY="auto"
+      width="100%"
+    >
+      <HeaderLite/>
+      <Box
+        maxW="520px"
         w="100%"
-        textAlign="center"
-        justify="center"
-        align="center"
-        flexDirection="column"
-        bgColor="white"
-        boxShadow="2xl"
-        borderRadius="15"
-        p="2"
+        p="6"
+        mx="auto"
+        my="12"
+        bg="white"
+        borderRadius="5"
+        boxShadow="lg"
+        borderColor="gray.100"
+        borderWidth="1px"
       >
-        <StepsList onCreate={onCreate} />
-      </Flex>
-    </Flex>
+        <Box mb="10">
+          <Text fontSize="2xl">Добро пожаловать!</Text>
+          <Text fontSize="md">Чтобы начать работу необходимо создать свой первый трекер расходов</Text>
+        </Box>
+        <Box>
+          <Box as="form" onSubmit={handleSubmit}>
+            <VStack spacing="6">
+              <FormControl id="name" isRequired>
+                <FormLabel>Название:</FormLabel>
+                <Input type="text" />
+              </FormControl>
+
+              <FormControl id="dateFrom" isRequired>
+                <FormLabel>Финансовый период:</FormLabel>
+                <HStack w="100%">
+                  <Input type="date" min={minStringDate}/>
+                  <Input type="date" max={maxStringDate}/>
+                </HStack>
+              </FormControl>
+
+
+              <HStack w="100%">
+                <FormControl id="country">
+                  <FormLabel>Страна:</FormLabel>
+                    <Select placeholder=' '>
+                      {countries.data ? countries.data.map((item: any, i: number) => {
+                        return <option key={i} value={item.key}>{item?.flag} {item?.name?.common || ''}</option>
+                      }) : null}
+                    </Select>
+                </FormControl>
+                <FormControl id="currency">
+                  <FormLabel>Валюта:</FormLabel>
+                    <Select placeholder=' '>
+                      {currencies.data ? currencies.data.map((item: any, i: number) => {
+                        return <option key={i} value={item.key}>{item.key} {item.symbol}</option>
+                      }) : null}
+                    </Select>
+                </FormControl>
+              </HStack>
+              <Box>
+                <FormLabel>Категории расходов и их предпологаемы суммы за один финансовый период:</FormLabel>
+                  <VStack>
+                    {categoryValues.map((element, index) => (
+                      <HStack key={index} w="100%">
+                        <Input
+                          type="text"
+                          name="category"
+                          value={element.category || ''}
+                          onChange={e => handleChange(index, e)}
+                        />
+                        <Input
+                          w="26"
+                          type="number"
+                          name="sum"
+                          value={element.sum || ''}
+                          onChange={e => handleChange(index, e)}
+                        />
+                      </HStack>
+                    ))}
+                  </VStack>
+              </Box>
+              <div className="button-section">
+                  <button className="button add" type="button" onClick={() => addFormFields()}>Add</button>
+                  <button className="button submit" type="submit">Submit</button>
+              </div>
+            </VStack>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 
