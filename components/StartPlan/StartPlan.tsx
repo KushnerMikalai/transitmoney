@@ -15,6 +15,12 @@ import {
 import HeaderLite from '../layout/HeaderLite'
 import {useCountries, useCurrencies} from '../../lib/swr-hooks'
 
+import {
+  HiPlusCircle,
+  HiTrash
+} from 'react-icons/hi'
+
+
 const StartPlan = () => {
   const countries = useCountries()
   const currencies = useCurrencies()
@@ -97,7 +103,6 @@ const StartPlan = () => {
                 </HStack>
               </FormControl>
 
-
               <HStack w="100%">
                 <FormControl id="country">
                   <FormLabel>Страна:</FormLabel>
@@ -120,28 +125,75 @@ const StartPlan = () => {
                 <FormLabel>Категории расходов и их предпологаемы суммы за один финансовый период:</FormLabel>
                   <VStack>
                     {categoryValues.map((element, index) => (
-                      <HStack key={index} w="100%">
-                        <Input
-                          type="text"
-                          name="category"
-                          value={element.category || ''}
-                          onChange={e => handleChange(index, e)}
-                        />
-                        <Input
-                          w="26"
-                          type="number"
-                          name="sum"
-                          value={element.sum || ''}
-                          onChange={e => handleChange(index, e)}
-                        />
-                      </HStack>
+                      <Box
+                        key={index}
+                        role="group"
+                        w="100%"
+                        position={'relative'}
+                      >
+                        <HStack
+                        >
+                          <Input
+                            type="text"
+                            name="category"
+                            value={element.category || ''}
+                            onChange={e => handleChange(index, e)}
+                          />
+                          <Input
+                            w="26"
+                            type="number"
+                            name="sum"
+                            value={element.sum || ''}
+                            onChange={e => handleChange(index, e)}
+                          />
+
+                          <Box
+                            position={'absolute'}
+                            top={'50%'}
+                            right={'-20px'}
+                            cursor={'pointer'}
+                            transform={'translateY(-50%)'}
+                            color={'red.500'}
+                            role="group"
+                            opacity={'0'}
+                            transitionProperty={'opacity'}
+                            transitionDelay={'150ms'}
+                            onClick={() => removeFormFields(index)}
+                            _groupHover={{opacity: 1 }}
+                          >
+                            <HiTrash/>
+                          </Box>
+                        </HStack>
+                      </Box>
                     ))}
+                    <Box
+                      position={'relative'}
+                      display={'flex'}
+                      alignItems={'center'}
+                      justifyContent={'center'}
+                      borderRadius={'3'}
+                      cursor={'pointer'}
+                      w="100%"
+                      h="40px"
+                      backgroundColor={'blue.50'}
+                      borderWidth={'2px'}
+                      borderStyle={'dashed'}
+                      borderColor={'blue.200'}
+                      color="blue.500"
+                      onClick={() => addFormFields()}
+                    >
+                      <HiPlusCircle />
+                    </Box>
                   </VStack>
               </Box>
-              <div className="button-section">
-                  <button className="button add" type="button" onClick={() => addFormFields()}>Add</button>
-                  <button className="button submit" type="submit">Submit</button>
-              </div>
+              <Flex
+                justifyContent={'flex-end'}
+                w={'100%'}
+              >
+                <Button type="submit" colorScheme={'green'}>
+                  Отправить
+                </Button>
+              </Flex>
             </VStack>
           </Box>
         </Box>

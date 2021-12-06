@@ -35,6 +35,16 @@ export function useCurrencies() {
   }
 }
 
+export function useBudgets() {
+  const {data, error} = useSWR('/api/budgets', fetcher)
+
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 
 // TODO api services
 // export function useEntries() {
